@@ -25,4 +25,12 @@ svg
   .attr("y2", 120)
   .attr("stroke", "red");
 
+svg
+  .append("text")
+  .attr("x", 20)
+  .attr("y", 200)
+  .attr("fill", "grey")
+  .text("Hello, ninjas")
+  .style("font-family", "arial");
+
 console.log(canvas);
