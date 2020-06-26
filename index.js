@@ -75,16 +75,13 @@ const update = (data) => {
   yAxisGroup.call(yAxis);
 };
 
-db.collection("dishes")
-  .get()
-  .then((res) => {
-    let data = [];
-    res.docs.forEach((doc) => {
-      data.push(doc.data());
-    });
+let data = [];
 
-    d3.interval(() => {
-      data.pop();
-      update(data);
-    }, 3000);
+//get data from firestore
+db.collection("dishes").onSnapshot((res) => {
+  res.docChanges().forEach((change) => {
+    console.log(change.doc.data());
   });
+
+  update(data);
+});
