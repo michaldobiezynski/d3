@@ -15,12 +15,17 @@ const graph = svg
   .attr("height", graphHeight)
   .attr("transform", `translate(${margins.left}, ${margins.top})`);
 
+const xAxisGroup = graph
+  .append("g")
+  .attr("transform", `translate(0, ${graphHeight})`);
+const yAxisGroup = graph.append("g");
+
 d3.json("menu.json").then((data) => {
   //creating the linear scale
   const y = d3
     .scaleLinear()
     .domain([0, d3.max(data, (d) => d.orders)])
-    .range([0, 500]);
+    .range([0, graphHeight]);
 
   // const min = d3.min(data, (d) => d.orders);
   // const max = d3.max(data, (d) => d.orders);
@@ -59,4 +64,11 @@ d3.json("menu.json").then((data) => {
     .attr("height", (d) => y(d.orders))
     .attr("fill", "orange")
     .attr("x", (d) => x(d.name));
+
+  //create and call the axes
+  const xAxis = d3.axisBottom(x);
+  const yAxis = d3.axisLeft(y);
+
+  xAxisGroup.call(xAxis);
+  yAxisGroup.call(yAxis);
 });
