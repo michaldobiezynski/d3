@@ -1,4 +1,19 @@
-const svg = d3.select("svg");
+const svg = d3
+  .select(".canvas")
+  .append("svg")
+  .attr("width", 600)
+  .attr("height", 600);
+
+//create margins and dimensions
+const margins = { top: 20, right: 20, bottom: 100, left: 100 };
+const graphWidth = 600 - margins.left - margins.right;
+const graphHeight = 600 - margins.top - margins.bottom;
+
+const graph = svg
+  .append("g")
+  .attr("width", graphWidth)
+  .attr("height", graphHeight)
+  .attr("transform", `translate(${margins.left}, ${margins.top})`);
 
 d3.json("menu.json").then((data) => {
   //creating the linear scale
@@ -28,7 +43,7 @@ d3.json("menu.json").then((data) => {
   console.log(x.bandwidth());
 
   // join the data to rects
-  const rects = svg.selectAll("rect").data(data);
+  const rects = graph.selectAll("rect").data(data);
 
   rects
     .attr("width", x.bandwidth)
