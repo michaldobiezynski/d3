@@ -15,6 +15,14 @@ const graph = svg
   .attr("height", graphHeight)
   .attr("transform", `translate(${margins.left}, ${margins.top})`);
 
+graph.append("rect");
+graph.append("rect");
+graph.append("rect");
+graph.append("rect");
+graph.append("rect");
+graph.append("rect");
+graph.append("rect");
+
 const xAxisGroup = graph
   .append("g")
   .attr("transform", `translate(0, ${graphHeight})`);
@@ -40,36 +48,41 @@ db.collection("dishes")
       .range([0, 500])
       .paddingInner(0.2)
       .paddingOuter(0.2);
+
     console.log(x("veg curry"));
     console.log(x.bandwidth());
+
     // join the data to rects
     const rects = graph.selectAll("rect").data(data);
-    rects
-      .attr("width", x.bandwidth)
-      .attr("height", (d) => graphHeight - y(d.orders))
-      .attr("fill", "orange")
-      .attr("x", (d) => x(d.name))
-      .attr("y", (d) => y(d.orders));
-    //append the enter selection to the DOM
-    rects
-      .enter()
-      .append("rect")
-      .attr("width", x.bandwidth)
-      .attr("height", (d) => graphHeight - y(d.orders))
-      .attr("fill", "orange")
-      .attr("x", (d) => x(d.name))
-      .attr("y", (d) => y(d.orders));
-    //create and call the axes
-    const xAxis = d3.axisBottom(x);
-    const yAxis = d3
-      .axisLeft(y)
-      .ticks(3)
-      .tickFormat((d) => d + " orders");
-    xAxisGroup.call(xAxis);
-    yAxisGroup.call(yAxis);
-    xAxisGroup
-      .selectAll("text")
-      .attr("transform", "rotate(-40)")
-      .attr("text-anchor", "end")
-      .attr("fill", "orange");
+
+    console.log(rects);
+
+    // rects
+    //   .attr("width", x.bandwidth)
+    //   .attr("height", (d) => graphHeight - y(d.orders))
+    //   .attr("fill", "orange")
+    //   .attr("x", (d) => x(d.name))
+    //   .attr("y", (d) => y(d.orders));
+    // //append the enter selection to the DOM
+    // rects
+    //   .enter()
+    //   .append("rect")
+    //   .attr("width", x.bandwidth)
+    //   .attr("height", (d) => graphHeight - y(d.orders))
+    //   .attr("fill", "orange")
+    //   .attr("x", (d) => x(d.name))
+    //   .attr("y", (d) => y(d.orders));
+    // //create and call the axes
+    // const xAxis = d3.axisBottom(x);
+    // const yAxis = d3
+    //   .axisLeft(y)
+    //   .ticks(3)
+    //   .tickFormat((d) => d + " orders");
+    // xAxisGroup.call(xAxis);
+    // yAxisGroup.call(yAxis);
+    // xAxisGroup
+    //   .selectAll("text")
+    //   .attr("transform", "rotate(-40)")
+    //   .attr("text-anchor", "end")
+    //   .attr("fill", "orange");
   });
