@@ -6,21 +6,31 @@ d3.json("menu.json").then((data) => {
 
   console.log(y(400));
 
+  const x = d3
+    .scaleBand()
+    .domain(data.map((item) => item.name))
+    .range([0, 500])
+    .paddingInner(0.2)
+    .paddingOuter(0.2);
+
+  console.log(x("veg curry"));
+  console.log(x.bandwidth());
+
   // join the data to rects
   const rects = svg.selectAll("rect").data(data);
 
   rects
-    .attr("width", 50)
+    .attr("width", x.bandwidth)
     .attr("height", (d) => y(d.orders))
     .attr("fill", "orange")
-    .attr("x", (d, i) => i * 70);
+    .attr("x", (d) => x(d.name));
 
   //append the enter selection to the DOM
   rects
     .enter()
     .append("rect")
-    .attr("width", 50)
+    .attr("width", x.bandwidth)
     .attr("height", (d) => y(d.orders))
     .attr("fill", "orange")
-    .attr("x", (d, i) => i * 70);
+    .attr("x", (d) => x(d.name));
 });
