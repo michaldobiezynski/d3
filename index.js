@@ -50,7 +50,7 @@ const update = (data) => {
   const rects = graph.selectAll("rect").data(data);
 
   //remove exit selection
-  rects.exit().remove();
+  //   rects.exit().remove();
 
   //update current shapes in dom
   rects
@@ -83,5 +83,8 @@ db.collection("dishes")
       data.push(doc.data());
     });
 
-    update(data);
+    d3.interval(() => {
+      data[0].orders += 50;
+      update(data);
+    }, 1000);
   });
