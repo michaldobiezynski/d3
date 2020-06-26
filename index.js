@@ -40,6 +40,8 @@ xAxisGroup
   .attr("text-anchor", "end")
   .attr("fill", "orange");
 
+const t = d3.transition().duration(2000);
+
 //update function
 const update = (data) => {
   //updating scale domains
@@ -55,13 +57,11 @@ const update = (data) => {
   //update current shapes in dom
   rects
     .attr("width", x.bandwidth)
-
     .attr("fill", "orange")
-    .attr("x", (d) => x(d.name))
-    .transition()
-    .duration(1000)
-    .attr("height", (d) => graphHeight - y(d.orders))
-    .attr("y", (d) => y(d.orders));
+    .attr("x", (d) => x(d.name));
+  // .transition(t)
+  // .attr("height", (d) => graphHeight - y(d.orders))
+  // .attr("y", (d) => y(d.orders));
 
   //append the enter selection to the DOM
   rects
@@ -72,8 +72,8 @@ const update = (data) => {
     .attr("fill", "orange")
     .attr("x", (d) => x(d.name))
     .attr("y", graphHeight)
-    .transition()
-    .duration(1000)
+    .merge(rects)
+    .transition(t)
     .attr("y", (d) => y(d.orders))
     .attr("height", (d) => graphHeight - y(d.orders));
 
