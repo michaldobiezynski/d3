@@ -41,10 +41,12 @@ const update = (data) => {
     .enter()
     .append("path")
     .attr("class", "arc")
-    .attr("d", arcPath)
     .attr("stroke", "#fff")
     .attr("stroke-width", 3)
-    .attr("fill", (d) => colour(d.data.name));
+    .attr("fill", (d) => colour(d.data.name))
+    .transition()
+    .duration(750)
+    .attrTween("d", arcTweenEnter);
 };
 
 // data array and firestore
@@ -72,3 +74,12 @@ db.collection("expenses").onSnapshot((res) => {
 
   update(data);
 });
+
+const arcTweenEnter = (d) => {
+  var i = d3.interpolate(d.endAngle, d.startAngle);
+
+  return function (t) {
+    d.startAngle = i(t);
+    return arcPath(d);
+  };
+};
