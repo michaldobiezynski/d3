@@ -27,7 +27,24 @@ const update = (data) => {
 
   //get nodes selection and join data
   const nodes = graph.selectAll(".nodes").data(treeData.descendants());
-  console.log(nodes);
+
+  //create enter node groups
+  const enterNodes = nodes
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    .attr("transform", (d) => `translate(${d.x}, ${d.x})`);
+
+  //append rects to enter nodes
+  enterNodes
+    .append("rect")
+    .attr("fill", "#aaa")
+    .attr("stroke", "#555")
+    .attr("stroke-width", 2)
+    .attr("height", 50)
+    .attr("width", (d) => d.data.name.length * 20);
+
+  console.log(enterNodes);
 };
 
 // data and firestore
